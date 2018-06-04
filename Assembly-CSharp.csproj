@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{5B580621-09B4-68CB-B5F4-5B9DD210A60F}</ProjectGuid>
+    <ProjectGuid>{BCD2BA3B-A324-8076-B9AD-75C455D89A52}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -46,8 +46,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Content\Rabit\HeroController.cs" />
-     <Compile Include="Assets\Content\Rabit\HeroFollow.cs" />
+     <Compile Include="Assets\Content\Scripts\DeathHere.cs" />
+     <Compile Include="Assets\Content\Scripts\HeroController.cs" />
+     <Compile Include="Assets\Content\Scripts\HeroFollow.cs" />
+     <Compile Include="Assets\Content\Scripts\LevelController.cs" />
+     <Compile Include="Assets\Content\Scripts\ParallaxLayer.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
