@@ -29,93 +29,96 @@ public class HeroController : MonoBehaviour
 
     void FixedUpdate()
     {
+        Animator animator = GetComponent<Animator>();
 
         float value = Input.GetAxis("Horizontal");
 
-        // Run
-        if (Mathf.Abs(value) > 0)
+        if (!animator.GetBool("die"))
         {
-            Vector2 vel = myBody.velocity;
-            vel.x = value * speed;
-            myBody.velocity = vel;
-        }
-
-        // Sprite flipping
-        SpriteRenderer sr = GetComponent<SpriteRenderer>();
-        if (value < 0)
-        {
-            sr.flipX = true;
-        }
-        else if (value > 0)
-        {
-            sr.flipX = false;
-        }
-
-        // Grounding
-        Vector3 from = transform.position + Vector3.up * 0.3f;
-        Vector3 to = transform.position + Vector3.down * 0.1f;
-        int layer_id = 1 << LayerMask.NameToLayer("Ground");
-        RaycastHit2D hit = Physics2D.Linecast(from, to, layer_id);
-        if (hit)
-        {
-            isGrounded = true;
-            if (hit.transform != null && hit.transform.GetComponent<MovingPlatform>() != null)
+            // Run
+            if (Mathf.Abs(value) > 0)
             {
-                SetNewParent(this.transform, hit.transform);
+                Vector2 vel = myBody.velocity;
+                vel.x = value * speed;
+                myBody.velocity = vel;
             }
-        }
-        else
-        {
-            isGrounded = false;
-            SetNewParent(this.transform, this.heroParent);
-        }
-        Debug.DrawLine(from, to, Color.red);
 
-        // Jump
-        if (Input.GetButtonDown("Jump") && isGrounded)
-        {
-            this.JumpActive = true;
-        }
-        if (this.JumpActive)
-        {
-            if (Input.GetButton("Jump"))
+            // Sprite flipping
+            SpriteRenderer sr = GetComponent<SpriteRenderer>();
+            if (value < 0)
             {
-                this.JumpTime += Time.deltaTime;
-                if (this.JumpTime < this.MaxJumpTime)
+                sr.flipX = true;
+            }
+            else if (value > 0)
+            {
+                sr.flipX = false;
+            }
+
+            // Grounding
+            Vector3 from = transform.position + Vector3.up * 0.3f;
+            Vector3 to = transform.position + Vector3.down * 0.1f;
+            int layer_id = 1 << LayerMask.NameToLayer("Ground");
+            RaycastHit2D hit = Physics2D.Linecast(from, to, layer_id);
+            if (hit)
+            {
+                isGrounded = true;
+                if (hit.transform != null && hit.transform.GetComponent<MovingPlatform>() != null)
                 {
-                    Vector2 vel = myBody.velocity;
-                    vel.y = JumpSpeed * (1.0f - JumpTime / MaxJumpTime);
-                    myBody.velocity = vel;
+                    SetNewParent(this.transform, hit.transform);
                 }
             }
             else
             {
-                this.JumpActive = false;
-                this.JumpTime = 0;
+                isGrounded = false;
+                SetNewParent(this.transform, this.heroParent);
             }
-        }
+            Debug.DrawLine(from, to, Color.red);
 
-        // Animtion part
-        Animator animator = GetComponent<Animator>();
+            // Jump
+            if (Input.GetButtonDown("Jump") && isGrounded)
+            {
+                this.JumpActive = true;
+            }
+            if (this.JumpActive)
+            {
+                if (Input.GetButton("Jump"))
+                {
+                    this.JumpTime += Time.deltaTime;
+                    if (this.JumpTime < this.MaxJumpTime)
+                    {
+                        Vector2 vel = myBody.velocity;
+                        vel.y = JumpSpeed * (1.0f - JumpTime / MaxJumpTime);
+                        myBody.velocity = vel;
+                    }
+                }
+                else
+                {
+                    this.JumpActive = false;
+                    this.JumpTime = 0;
+                }
+            }
 
-        // Run
-        if (Mathf.Abs(value) > 0)
-        {
-            animator.SetBool("run", true);
-        }
-        else
-        {
-            animator.SetBool("run", false);
-        }
+            // Animtion part
 
-        // Jump
-        if (this.isGrounded)
-        {
-            animator.SetBool("jump", false);
-        }
-        else
-        {
-            animator.SetBool("jump", true);
+            // Run
+            if (Mathf.Abs(value) > 0)
+            {
+                animator.SetBool("run", true);
+            }
+            else
+            {
+                animator.SetBool("run", false);
+            }
+
+            // Jump
+            if (this.isGrounded)
+            {
+                animator.SetBool("jump", false);
+            }
+            else
+            {
+                animator.SetBool("jump", true);
+            }
         }
     }
 
@@ -139,11 +142,12 @@ public class HeroController : MonoBehaviour
             scale.x *= 2;
             scale.y *= 2;
             this.transform.localScale = scale;
-            isBig=true;
+            isBig = true;
         }
     }
 
-    public void becomeSmall(){
+    public void becomeSmall()
+    {
         if (isBig)
         {
             Transform transform = this.transform;
