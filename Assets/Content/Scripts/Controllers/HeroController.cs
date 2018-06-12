@@ -14,12 +14,18 @@ public class HeroController : MonoBehaviour
     public float JumpSpeed = 2f;
     Transform heroParent = null;
     bool isBig = false;
+    public static HeroController lastRabbit = null;
 
     void Start()
     {
         myBody = this.GetComponent<Rigidbody2D>();
         LevelController.current.setStartPosition(transform.position);
         this.heroParent = this.transform.parent;
+    }
+
+    void Awake()
+    {
+        lastRabbit=this;
     }
 
     void Update()

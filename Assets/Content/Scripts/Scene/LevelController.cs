@@ -24,10 +24,10 @@ public class LevelController : MonoBehaviour
         StartCoroutine(waitForDeath(1, rabbit));
     }
 
-    IEnumerator waitForDeath(int sec, HeroController rabbit)
+    IEnumerator waitForDeath(float sec, HeroController rabbit)
     {
         Animator animator = rabbit.GetComponent<Animator>();
-        animator.SetBool("die", true);
+        animator.SetBool("die",true);
         // Debug.LogWarning("Starting");
         yield return new WaitForSeconds(sec);
         // Debug.LogWarning("End");
